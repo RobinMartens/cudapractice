@@ -16,14 +16,9 @@ mod = SourceModule("""
 def verbose_add():
 	gpu_add = mod.get_function("add")
 
-	x = 2
-	y = 7
-	z = 0
-
-	# I personally don't like changing the type of identifiers...
-	x = x.astype(np.float32)
-	y = y.astype(np.float32)
-	z = z.astype(np.float32)
+	x = np.int32(2)
+	y = np.int32(7)
+	z = np.int32(0)
 
 	# move data to the device
 	x_ = cuda.mem_alloc(x.nbytes)
