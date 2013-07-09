@@ -1,4 +1,6 @@
-#include<stdio.h>
+#include <stdio.h>
+
+#include "kernels.h"
 
 #define N 10
 
@@ -22,16 +24,20 @@ int main(int argc, char **argv) {
 	cudaMalloc((void**)&b_, N * sizeof(int));
 	cudaMalloc((void**)&out_, N * sizeof(int));
 
-	cudaMemcpy(a, a_, N * sizeof(int), cudaMemcpyHostToDevice);
-	cudaMemcpy(b, b_, N * sizeof(int), cudaMemcpyHostToDevice);
+	cudaMemcpy(a_, a, N * sizeof(int), cudaMemcpyHostToDevice);
+	cudaMemcpy(b_, b, N * sizeof(int), cudaMemcpyHostToDevice);
 
-	vector_add<<<N,1>>>(a_, b_, out_);
+	vector_add<<<N,1>>>(a_, b_, out_, N);
 
-	cudaMemcpy(out_, out, N * sizeof(int), cudaMemcpyDeviceToHost);
+	cudaMemcpy(out, out_, N * sizeof(int), cudaMemcpyDeviceToHost);
 
 	cudaFree(a_);
 	cudaFree(b_);
-	cudaFree(c_);
+	cudaFree(out_);
+
+	for(int i=0; i < N; i++){
+		printf("%d + %d = %d\n", a[i], b[i], out[i]);
+	}
 
 	return 0;
 }
