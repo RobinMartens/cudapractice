@@ -44,3 +44,13 @@ def verbose_add():
 
 def concise_add():
 	raise ValueError("Under construction")
+
+
+def main():
+	print "attempting 'verbose_add'"
+	verbose_add()
+	print "'verbose_add' complete"
+
+
+if __name__=="__main__":
+	main()
